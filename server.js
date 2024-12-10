@@ -5,7 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 const ProductCreator = require('./products/ProductCreator');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 const db = new sqlite3.Database('./database.db', (err) => {
     if (err) {
@@ -143,6 +143,6 @@ const updateProductPrice = (dbProduct, newProductPrice) => {
 };
 
 // Start de server
-app.listen(port, () => {
-    console.log(`Server draait op http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server draait op http://localhost:${PORT}`);
 });
