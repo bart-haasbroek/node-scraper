@@ -6,6 +6,7 @@ const ProductCreator = require('./products/ProductCreator');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(express.json());
 
 const db = new sqlite3.Database('./database.db', (err) => {
     if (err) {
@@ -32,7 +33,9 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.get('/add-product', async (req, res) => {
+app.post('/add-product', async (req, res) => {
+    console.log('req.body', req.body);
+
     const { url } = req.body;
     // let url = 'https://tweakers.net/pricewatch/2110590/apple-iphone-16-pro-512gb-opslag-zwart.html';
     // let url = 'https://www.welkoop.nl/bf-petfood-lam-rijst-hondenvoer-rijst-12-5kg_1221465';
