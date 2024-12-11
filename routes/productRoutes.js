@@ -21,7 +21,7 @@ router.post('/add-product', async (req, res) => {
     }
 });
 
-router.post('/price-drops', async (req, res) => {
+router.get('/price-drops', async (req, res) => {
     const product = await productService.priceDrops();
     try {
         res.json(product);
