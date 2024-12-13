@@ -46,7 +46,7 @@ class TweakersProduct extends Product {
             return `https://tweakers.net/ajax/price_chart/${id}/nl/`;
         }
 
-        return "https://tweakers.net/ajax/price_chart/1920044/nl/";
+        return "";
     }
 
     async getProductData() {

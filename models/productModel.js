@@ -16,12 +16,11 @@ const getProducts = () => {
     });
 };
 
-// Functie voor het toevoegen van een product
 const createProduct = (product) => {
     return new Promise((resolve, reject) => {
         const query = `
-        INSERT INTO products (key, name, initialPrice, currentPrice, priceHistory, url, requestUrl, lastChecked)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO products (key, name, initialPrice, currentPrice, lastCheckedPrice, priceHistory, url, requestUrl, lastChecked)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
         db.run(query, product, function (err) {
             if (err) {
@@ -33,15 +32,30 @@ const createProduct = (product) => {
     });
 };
 
+const deleteProduct = (productId) => {
+    return new Promise((resolve, reject) => {
+        const query = `DELETE FROM products WHERE id = ?`;
+
+        db.run(query, [productId], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(`Product with ID ${productId} deleted successfully.`);
+            }
+        });
+    });
+};
+
 const updateProduct = (productId, product) => {
     return new Promise((resolve, reject) => {
-        const { newProductPrice, newhistory, lastChecked } = product;
+        const { newProductPrice, newHistory, lastChecked, lastCheckedPrice } = product;
+
         const query = `
             UPDATE products
-            SET priceHistory = ?, currentPrice = ?, lastChecked = ?
+            SET priceHistory = ?, currentPrice = ?, lastCheckedPrice = ?, lastChecked = ?
             WHERE id = ?
         `;
-        const values = [JSON.stringify(newhistory), newProductPrice, lastChecked, productId];
+        const values = [JSON.stringify(newHistory), newProductPrice, lastCheckedPrice, lastChecked, productId];
         db.run(query, values, function (err) {
             if (err) {
                 reject(err);
@@ -52,4 +66,4 @@ const updateProduct = (productId, product) => {
     });
 };
 
-module.exports = { getProducts, createProduct, updateProduct };
+module.exports = { getProducts, createProduct, updateProduct, deleteProduct };

@@ -14,6 +14,7 @@ db.run(`CREATE TABLE IF NOT EXISTS products (
     name TEXT NOT NULL,
     initialPrice REAL NOT NULL,
     currentPrice REAL NOT NULL,
+    lastCheckedPrice REAL NOT NULL,
     priceHistory TEXT NOT NULL,
     url TEXT NOT NULL,
     requestUrl TEXT NOT NULL,
