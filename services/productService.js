@@ -74,6 +74,7 @@ const priceDrops = async () => {
             return {
                 id: row.id,
                 name: row.name,
+                key: row.key,
                 initialPrice: row.initialPrice,
                 currentPrice: row.currentPrice,
                 lastCheckedPrice: row.lastCheckedPrice,

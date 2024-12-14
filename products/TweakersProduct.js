@@ -7,12 +7,16 @@ class TweakersProduct extends Product {
     }
 
     async getPrice(requestUrl) {
-        const response = await fetch(requestUrl);
-        const priceDataResponse = await response.json();
-        const priceDataSource = priceDataResponse.dataset.source.pop();
-        const [date, price, averagePrice] = priceDataSource;
-        // get price insted of price dataset
-        return price;
+        try {
+            const response = await fetch(requestUrl);
+            const priceDataResponse = await response.json();
+            const priceDataSource = priceDataResponse.dataset.source.pop();
+            const [date, price, averagePrice] = priceDataSource;
+            return price;
+        }
+        catch (error) {
+            console.error('error tweakers price', error);
+        }
     }
 
     async getProductName() {
@@ -24,7 +28,6 @@ class TweakersProduct extends Product {
             const title = match[1];
             return decode(title);
         } else {
-            console.log("Titel niet gevonden");
             return null;
         }
 

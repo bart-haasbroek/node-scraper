@@ -7,19 +7,23 @@ class WelkoopProduct extends Product {
     }
 
     async getPrice(requestUrl) {
-        const response = await this.getHtmlString();
-        const regex = /<\s*span\s+class="price">(\d+)\.<sup>(\d+)<\/sup><\/span>/;
-        const match = response.match(regex);
-        let price = '';
+        try {
+            const response = await this.getHtmlString();
+            const regex = /<\s*span\s+class="price">(\d+)\.<sup>(\d+)<\/sup><\/span>/;
+            const match = response.match(regex);
+            let price = '';
 
-        if (match) {
-            price = `${match[1]}.${match[2]}`;
-            console.log('Price:', price); // Output: Price: 53.95
-        } else {
-            console.error('Price not found!');
+            if (match) {
+                price = `${match[1]}.${match[2]}`;
+                console.log('Price:', price); // Output: Price: 53.95
+            } else {
+                console.error('Price not found!');
+            }
+            // get price insted of price dataset
+            return price;
+        } catch (error) {
+            console.error('error welkoop price', error);
         }
-        // get price insted of price dataset
-        return price;
     }
 
     async getProductData() {
