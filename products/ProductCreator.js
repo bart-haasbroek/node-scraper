@@ -9,14 +9,17 @@ class ProductCreator {
         welkoop: WelkoopProduct,
     };
 
-    constructor(url) {
-        const product = this.buildProduct(url);
-        return new product(url);
-    }
+    static create(url) {
+        const creator = new ProductCreator();
+        const productKey = creator.getProductKeyFromUrl(url);
 
-    buildProduct(url) {
-        const productKey = this.getProductKeyFromUrl(url);
-        return this.classMap[productKey] ?? null;
+        const product = creator.classMap[productKey] ?? null;
+
+        if (!product) {
+            return null;
+        }
+
+        return new product(url);
     }
 
     getProductKeyFromUrl(url) {

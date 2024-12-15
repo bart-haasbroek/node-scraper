@@ -62,7 +62,7 @@ router.get('/price-drops', async (req, res) => {
 router.get('/check-prices', async (req, res) => {
     await productService.checkPrices();
     try {
-        res.send('Gelukt');
+        res.send('Check prices success');
     } catch (error) {
         res.status(500).send({ error: 'Failed to fetch pricedrops', details: error.message });
     }

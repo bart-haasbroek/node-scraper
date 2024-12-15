@@ -18,7 +18,11 @@ const createProduct = async (url) => {
         throw new Error('Product already exists');
     }
 
-    const product = new ProductCreator(url);
+    const product = ProductCreator.create(url);
+    if (!product) {
+        throw new Error('Product not supported yet.');
+    }
+
     const data = await product.getProductData();
     const lastChecked = new Date().toISOString();
     const priceHistory = JSON.stringify([{ price: data.price, date: lastChecked }]);
@@ -37,7 +41,7 @@ const checkPrices = async () => {
         const products = await productModel.getProducts();
         await Promise.all(
             products.map(async (row) => {
-                const product = new ProductCreator(row.url);
+                const product = ProductCreator.create(row.url);
                 const newProductPrice = await product.getPrice(row.requestUrl);
 
                 const lastChecked = new Date().toISOString();
