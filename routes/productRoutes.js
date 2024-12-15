@@ -20,6 +20,8 @@ router.post('/add-product', async (req, res) => {
 
     try {
         const product = await productService.createProduct(url);
+        console.log('product!!!', product);
+
         res.json(product);
     } catch (error) {
         res.status(500).send({ error: 'Failed to add product', details: error.message });

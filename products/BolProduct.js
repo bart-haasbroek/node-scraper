@@ -1,6 +1,6 @@
 const Product = require('./Product');
 
-class WelkoopProduct extends Product {
+class BolProduct extends Product {
     constructor(url) {
         super(url);
     }
@@ -8,13 +8,12 @@ class WelkoopProduct extends Product {
     async getPrice(requestUrl) {
         try {
             const response = await this.getHtmlString();
-            const regex = /<\s*span\s+class="price">(\d+)\.<sup>(\d+)<\/sup><\/span>/;
+            const regex = /<span[^>]*class="[^"]*product-prices__bol-price[^"]*"[^>]*>(\d{1,3},\d{2})<\/span>/;
             const match = response.match(regex);
             let price = '';
 
             if (match) {
-                price = `${match[1]}.${match[2]}`;
-                console.log('Price:', price); // Output: Price: 53.95
+                price = match[1];
             } else {
                 console.error('Price not found!');
             }
@@ -32,7 +31,7 @@ class WelkoopProduct extends Product {
         const price = await this.getPrice(requestUrl);
 
         return {
-            key: "welkoop",
+            key: "bol",
             name: productName,
             price,
             url,
@@ -41,4 +40,4 @@ class WelkoopProduct extends Product {
     }
 }
 
-module.exports = WelkoopProduct;
+module.exports = BolProduct;

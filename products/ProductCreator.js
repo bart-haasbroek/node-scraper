@@ -1,8 +1,10 @@
 const TweakersProduct = require('./TweakersProduct');
 const WelkoopProduct = require('./WelkoopProduct');
+const BolProduct = require('./BolProduct');
 
 class ProductCreator {
     classMap = {
+        bol: BolProduct,
         tweakers: TweakersProduct,
         welkoop: WelkoopProduct,
     };
