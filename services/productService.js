@@ -27,7 +27,7 @@ const createProduct = async (url) => {
     const data = await product.getProductData();
     const lastChecked = new Date().toISOString();
     const priceHistory = JSON.stringify([{ price: data.price, date: lastChecked }]);
-    const newProduct = [data.key, data.name = '', data.price, data.price, data.price, priceHistory, data.url, data.requestUrl, lastChecked];
+    const newProduct = [data.key, data.name, data.price, data.price, data.price, priceHistory, data.url, data.requestUrl, lastChecked];
 
     return productModel.createProduct(newProduct);
 }

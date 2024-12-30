@@ -28,7 +28,7 @@ class TweakersProduct extends Product {
             const title = match[1];
             return decode(title);
         } else {
-            return null;
+            return "";
         }
 
         function decode(str) {

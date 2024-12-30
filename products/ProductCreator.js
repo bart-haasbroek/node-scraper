@@ -1,12 +1,14 @@
 const TweakersProduct = require('./TweakersProduct');
 const WelkoopProduct = require('./WelkoopProduct');
 const BolProduct = require('./BolProduct');
+const NintendoProduct = require('./NintendoProduct');
 
 class ProductCreator {
     classMap = {
         bol: BolProduct,
         tweakers: TweakersProduct,
         welkoop: WelkoopProduct,
+        nintendo: NintendoProduct,
     };
 
     static create(url) {

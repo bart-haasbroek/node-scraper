@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 
 class Product {
     htmlString;
+    apiData;
     constructor(url) {
         this.url = url;
     }
@@ -11,7 +12,17 @@ class Product {
     }
 
     getProductName() {
-        return "name";
+        return "";
+    }
+
+    async getApiData(url) {
+        if (this.apiData) {
+            return this.apiData;
+        }
+        const response = await fetch(url);
+        const data = await response.json();
+        this.apiData = data;
+        return data;
     }
 
     async getHtmlString(fresh = false) {
