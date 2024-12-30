@@ -1,5 +1,6 @@
 
 const productModel = require('../models/productModel');
+const errorModel = require('../models/errorModel');
 const ProductCreator = require('../products/ProductCreator');
 
 const getAllProducts = async () => {
@@ -42,14 +43,12 @@ const checkPrices = async () => {
         await Promise.all(
             products.map(async (row) => {
                 const product = ProductCreator.create(row.url);
-                const newProductPrice = await product.getPrice(row.requestUrl);
-
-                const lastChecked = new Date().toISOString();
-                const lastCheckedPrice = row.currentPrice;
-                const priceHistory = row.priceHistory ? JSON.parse(row.priceHistory) : [];
-                const newHistory = [...priceHistory, { price: newProductPrice, date: lastChecked }];
-
                 try {
+                    const newProductPrice = await product.getPrice(row.requestUrl);
+                    const lastChecked = new Date().toISOString();
+                    const lastCheckedPrice = row.currentPrice;
+                    const priceHistory = row.priceHistory ? JSON.parse(row.priceHistory) : [];
+                    const newHistory = [...priceHistory, { price: newProductPrice, date: lastChecked }];
                     await productModel.updateProduct(row.id, {
                         newHistory,
                         newProductPrice,
@@ -57,7 +56,11 @@ const checkPrices = async () => {
                         lastChecked,
                     });
                 } catch (error) {
-                    throw new Error('Failed to update product: ' + error.message);
+                    errorModel.createError({
+                        key: row.key,
+                        timestamp: new Date().toISOString(),
+                        errorCode: 'Failed to check price',
+                    });
                 }
             })
         );

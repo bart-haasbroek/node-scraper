@@ -33,6 +33,13 @@ class Product {
             console.error('Er is een fout opgetreden:', error);
         }
     }
+
+    formatPrice(price) {
+        let priceString = price.toString();
+        priceString = priceString.replace(",", ".");
+        let formattedPrice = parseFloat(priceString).toFixed(2);
+        return formattedPrice;
+    }
 }
 
 module.exports = Product;

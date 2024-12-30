@@ -17,6 +17,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
     }
 });
 
+
 db.run(`CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     key TEXT NOT NULL,
@@ -29,6 +30,27 @@ db.run(`CREATE TABLE IF NOT EXISTS products (
     requestUrl TEXT NOT NULL,
     lastChecked TEXT NOT NULL
 )`);
+
+db.run(`CREATE TABLE IF NOT EXISTS errors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    key TEXT NOT NULL,
+    timestamp TEXT NOT NULL,
+    errorCode TEXT NOT NULL
+)`);
+
+db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
+        email TEXT NOT NULL UNIQUE,
+        password_hash TEXT NOT NULL,
+        salt TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        is_active BOOLEAN DEFAULT 1,
+        role TEXT DEFAULT 'user'
+    );
+`);
 
 module.exports = db;
 

@@ -14,7 +14,7 @@ class WelkoopProduct extends Product {
 
             if (match) {
                 price = `${match[1]}.${match[2]}`;
-                console.log('Price:', price); // Output: Price: 53.95
+                price = this.formatPrice(price);
             } else {
                 console.error('Price not found!');
             }

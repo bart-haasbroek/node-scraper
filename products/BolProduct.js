@@ -14,13 +14,12 @@ class BolProduct extends Product {
 
             if (match) {
                 price = match[1];
+                return this.formatPrice(price);
             } else {
-                console.error('Price not found!');
+                throw new Error('Price not found!');
             }
-            // get price insted of price dataset
-            return price;
         } catch (error) {
-            console.error('error welkoop price', error);
+            console.error('error bol price', error);
         }
     }
 
